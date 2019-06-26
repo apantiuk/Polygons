@@ -1,0 +1,61 @@
+#first
+
+    pol1 = Polygon.Polygon([(10, 20), (20, 20), (20, -10), (10, -10)])
+    pol2 = Polygon.Polygon([(0, 10), (30, 10), (30, 0), (0, 0)])
+
+#second
+
+    areas = [
+        (
+            Polygon.Polygon([(-12, 4), (3, 4), (3, -2), (-12, -2)]),
+            'blue'
+        ),
+        (
+
+            Polygon.Polygon([(-9, 7), (-6, 7), (-6, -4), (-9, -4)]),
+            'red'
+        ),
+        (
+            Polygon.Polygon([(-2, 5), (0, 5), (0, -3), (4, -3), (4, -6), (-2, -6)]),
+            'red'
+        ),
+        (
+            Polygon.Polygon([(6, 3), (13, 3), (13, -1), (6, -1)]),
+            'blue'
+        ),
+        (
+            Polygon.Polygon([(7, 5), (10, 5), (10, -2), (7, -2)]),
+            'red'
+        ),
+        (
+            Polygon.Polygon([(16, 3), (22, 3), (22, 2), (16, 2)]),
+            'red'
+        ),
+        (
+            Polygon.Polygon([(17, 6), (20, 6), (20, -3), (17, -3)]),
+            'blue'
+        ),
+    ]
+
+#third
+
+    pol_points = [(9.49, 6.65),
+                  (9.49, 4.975),
+                  (12.845, 4.975),
+                  (12.845, -5.65),
+                  (10.11, -5.65),
+                  (10.11, -5.665),
+                  (6.065, -5.665),
+                  (6.065, -3.26),
+                  (2.385, -3.26),
+                  (2.385, 1.075),
+                  (4.79, 1.075),
+                  (4.79, 6.65)]
+
+    poly = CustomPolygon.Polygon('red', pol_points)
+    rectangle1 = CustomPolygon.Rectangle('yellow', 12.835, 1.67, (1.56, -0.65))
+    rectangle2 = CustomPolygon.Rectangle('yellow', 12.835, 1.67, (1.56, 4.295))
+    rectangle3 = CustomPolygon.Rectangle.from_points('blue', [(14.395, -0.65),
+                                           (14.395, -2.32),
+                                           (1.56, -2.32),
+                                           (1.56, -0.65)])

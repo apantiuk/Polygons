@@ -1,7 +1,18 @@
+"""
+Module CustomPolygon containing classes Polygon and Rectangle
+"""
+
+
 class Polygon:
+    """Class Polygon
+
+    Polygon represented by a list of points (tuple (x, y)), witch form only vertical and horizontal lines,
+    and a layer(string containing colour)
+    """
+
     def __init__(self, layer, points):
         if not __class__._validate_points(points):
-            raise ValueError
+            raise ValueError('Given points are invalid')
         self.layer = layer
         self.points = points
 
@@ -11,6 +22,11 @@ class Polygon:
         copy.append(copy.pop(0))
         return copy
 
+    @staticmethod
+    def _check_order(points):
+        #TODO: check if points are in clockwise order
+        pass
+
     @classmethod
     def _validate_points(cls, points):
         shifted_points = cls._shift_points(points)
@@ -18,6 +34,10 @@ class Polygon:
             if (x0 != x1 and y0 != y1) or (x0 == x1 and y0 ==y1):
                 return False
         return True
+
+    #####
+    # Polygon commands
+    #####
 
     @property
     def bounds(self):
@@ -27,12 +47,46 @@ class Polygon:
         height = max(y_coordinates) - min(y_coordinates)
         return width, height, top_left_point
 
-    def get_spacing(self, obj):
+    @property
+    def width(self):
+        width, _, _ = self.bounds
+        return width
+
+    def check_enclosure(self, other):
+        #TODO: check if other is englose inside self
+        pass
+
+    def get_spacing(self, other):
+        #TODO: return spacing between two polygons
+        pass
+
+    ######
+    # Polygon operations
+    ######
+
+    def __add__(self, other):
+        #TODO: realise operation of union for two polygons
+        pass
+
+    def __mul__(self, other):
+        #TODO: realise operation of intersection for two polygons using Weiler-Atherton clipping algorithm
+        pass
+
+    def __sub__(self, other):
+        #TODO: realise operation of difference for two polygons using Weiler-Atherton clipping algorithm
         pass
 
 
 class Rectangle(Polygon):
+    """Class Rectangle
+
+    Rectangle is represents by its top left vertex (tuple (x, y)), width, height and layer (string containing colour)
+    """
+
     def __init__(self, layer, width, height, top_left_point = (0, 0)):
+        if width <= 0 or height <= 0:
+            raise ValueError('Width and height cannot be equal or less than 0')
+
         self.top_left_point = top_left_point
         self._width = width
         self._height = height
@@ -40,8 +94,17 @@ class Rectangle(Polygon):
 
     @classmethod
     def from_points(cls, layer, points):
+        """Creates Rectangle from a given list of points
+
+        :param layer: colour/type of new rectangle
+        :type layer: str
+        :param points: list of four points forming rectangle
+        :type points: list
+        :return: a rectangle with given points
+        :rtype: Rectangle
+        """
         if not cls._validate_points(points):
-            raise ValueError
+            raise ValueError('Given points are invalid')
         obj = cls.__new__(cls)
         Polygon.__init__(obj, layer, points)
         obj._width, obj._height,  obj.top_left_point = obj.bounds
@@ -82,24 +145,6 @@ class Rectangle(Polygon):
     def height(self, value):
         self._height = value
 
-
-pol_points = [(9.49, 6.65),
-              (9.49, 4.975),
-              (12.845, 4.975),
-              (12.845, -5.65),
-              (10.11, -5.65),
-              (10.11, -5.665),
-              (6.065, -5.665),
-              (6.065, -3.26),
-              (2.385, -3.26),
-              (2.385, 1.075),
-              (4.79, 1.075),
-              (4.79, 6.65)]
-
-pol = Polygon('red', pol_points)
-rect1 = Rectangle('yellow', 12.835, 1.67, (1.56, -0.65))
-rect2 = Rectangle('yellow', 12.835, 1.67, (1.56, 4.295))
-rect3 = Rectangle.from_points('blue', [(14.395, -0.65),
-                                       (14.395, -2.32),
-                                       (1.56, -2.32),
-                                       (1.56, -0.65)])
+    @property
+    def bottom_right_point(self):
+        return self.top_left_point[0] + self._width,  self.top_left_point[1] - self._height
